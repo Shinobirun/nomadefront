@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="logo">
-      <img src="../assets/images/logo5.png" alt="Logo de Nosotros">
+      <img src="../assets/images/Nomade_Logo.png" alt="Logo de Nomade">
     </div>
     <nav class="normal-menu">
       <ul>
@@ -12,12 +12,12 @@
         <li @click="abrirModal"><a href="#"><img src="../assets/images/icons/luggage_1934282.png" alt="Iniciar sesión"> Iniciar sesión</a></li>
       </ul>
     </nav>
-    <div class="hamburger-menu">
+    <div class="hamburger-menu" @click="toggleMenu">
       <div class="bar"></div>
       <div class="bar"></div>
       <div class="bar"></div>
     </div>
-    <nav class="nav-hamburguer">
+    <nav class="nav-hamburguer" :class="{ active: isMenuActive }">
       <ul>
         <li><a href="/"><img src="../assets/images/icons/travelling_2060284.png" alt="Inicio"> Inicio</a></li>
         <li><a href="/tours"><img src="../assets/images/icons/map_1934285.png" alt="Tours"> Clima</a></li>
@@ -27,26 +27,23 @@
       </ul>
     </nav>
 
-    <LoguinModalComponet v-show="mostrarModal" @close="cerrarModal" />   
+    <LoginModalComponent v-show="mostrarModal" @close="cerrarModal" />   
   </header>
 </template>
 
 <script>
-
-
-
-
-
+import LoginModalComponent from './LoginModalComponent.vue';
 
 export default {
   name: 'HeaderComponent',
   components: {
-   
-        },
+    LoginModalComponent
+  },
   data() {
     return {
       mensaje: 'Componente Contacto',
       mostrarModal: false,
+      isMenuActive: false
     };
   },
   methods: {
@@ -58,21 +55,10 @@ export default {
       this.mostrarModal = false;
       console.log(this.mostrarModal);
     },
-  },
-  mounted() {
-    const hamburgerMenu = document.querySelector('.hamburger-menu');
-    const navHamburguer = document.querySelector('.nav-hamburguer');
-
-    hamburgerMenu.addEventListener('click', function() {
-      console.log('Click en el menú hamburguesa');
-      if (window.getComputedStyle(navHamburguer).display !== 'none') {
-        navHamburguer.classList.toggle('active');
-        console.log('Clase active toggled');
-      }
-    });
-
-    //navHamburguer.style.display = 'block';
-  },
+    toggleMenu() {
+      this.isMenuActive = !this.isMenuActive;
+    }
+  }
 };
 </script>
 
@@ -81,9 +67,9 @@ export default {
 
 header {
   display: grid;
-  grid-template-columns: 1fr auto; /* Divide el espacio en dos columnas, una para el logo y otra para el menú */
-  align-items: center; /* Centra verticalmente los elementos en el header */
-  background-color: var(--color-primary);
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  background-color: var(--color-accent);
   opacity: 1;
   padding: 10px 0;
 }
@@ -93,12 +79,12 @@ header:hover {
 }
 
 .logo {
-  text-align: left; /* Alinea el logo a la izquierda */
+  text-align: left;
   padding-left: 10%;
 }
 
 nav {
-  text-align: right; /* Alinea el menú a la derecha */
+  text-align: right;
 }
 
 .normal-menu {
@@ -113,6 +99,11 @@ nav {
 .nav-hamburguer {
   max-height: 0;
   overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.nav-hamburguer.active {
+  max-height: 800px;
 }
 
 .bar {
@@ -131,18 +122,18 @@ ul {
 
 li {
   display: inline;
-  margin-right: 20px; /* Espacio entre elementos del menú */
+  margin-right: 20px;
 }
 
 a {
   text-decoration: none;
-  color: var(--color-accent);
+  color: var(--color-primary);
   font-weight: bold;
 }
 
 a:hover {
   text-decoration: none;
-  color: var(--color-secondary); /* Color del texto del menú */
+  color: var(--color-secondary);
   font-weight: bold;
 }
 
@@ -150,10 +141,9 @@ li a img {
   height: 30px;
 }
 
-/* Media query para pantallas pequeñas */
 @media (max-width: 768px) {
-  header {
-    padding: 5px 0;
+  .normal-menu {
+    display: none;
   }
 
   .hamburger-menu {
@@ -162,16 +152,10 @@ li a img {
     margin-right: 20px;
   }
 
-  .normal-menu {
-    display: none;
-  }
-
   .nav-hamburguer.active {
-    max-height: 800px;
-    background-color: var(--color-primary);
+    background-color: var(--color-accent);
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     text-align: left;
-    margin-left: 70%;
   }
 
   .nav-hamburguer li {
@@ -180,12 +164,7 @@ li a img {
   }
 }
 
-/* Media query para pantallas medianas */
 @media (min-width: 769px) and (max-width: 1024px) {
-  header {
-    padding: 10px 0;
-  }
-
   .normal-menu {
     display: none;
   }
@@ -196,11 +175,9 @@ li a img {
   }
 
   .nav-hamburguer.active {
-    max-height: 800px;
-    background-color: var(--color-primary);
+    background-color: var(--color-accent);
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     text-align: left;
-    margin-left: 60%;
   }
 
   .nav-hamburguer li {
@@ -209,10 +186,18 @@ li a img {
   }
 }
 
-/* Media query para pantallas grandes */
 @media (min-width: 1025px) {
-  header {
-    padding: 15px 0;
+  .normal-menu {
+    display: block;
+  }
+
+  .hamburger-menu {
+    display: none;
+  }
+
+  .nav-hamburguer {
+    display: none;
   }
 }
 </style>
+
