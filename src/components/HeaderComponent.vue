@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import LoguinModalComponet from './loguinModalComponet.vue';
+
 
 
 
@@ -41,7 +41,7 @@ import LoguinModalComponet from './loguinModalComponet.vue';
 export default {
   name: 'HeaderComponent',
   components: {
-    LoguinModalComponet
+   
         },
   data() {
     return {
