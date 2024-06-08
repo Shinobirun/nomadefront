@@ -3,7 +3,7 @@
     <div class="logo">
       <img src="../assets/images/Nomade_Logo.png" alt="Logo de Nomade">
     </div>
-    <nav class="normal-menu">
+    <nav class="normal-menu" :class="{ hidden: isMenuActive }">
       <ul>
         <li><a href="/"><img src="../assets/images/icons/travelling_2060284.png" alt="Inicio"> Inicio</a></li>
         <li><a href="/tours"><img src="../assets/images/icons/map_1934285.png" alt="Tours"> Tours</a></li>
@@ -19,6 +19,7 @@
     </div>
     <nav class="nav-hamburguer" :class="{ active: isMenuActive }">
       <ul>
+        
         <li><a href="/"><img src="../assets/images/icons/travelling_2060284.png" alt="Inicio"> Inicio</a></li>
         <li><a href="/tours"><img src="../assets/images/icons/map_1934285.png" alt="Tours"> Clima</a></li>
         <li><a href="/contacto"><img src="../assets/images/icons/reception_1934306.png" alt="Contacto"> Contacto</a></li>
@@ -26,6 +27,7 @@
         <li @click="abrirModal"><a href="#"><img src="../assets/images/icons/luggage_1934282.png" alt="Iniciar sesión"> Iniciar sesión</a></li>
       </ul>
     </nav>
+
 
     <LoginModalComponent v-show="mostrarModal" @close="cerrarModal" />   
   </header>
@@ -62,8 +64,10 @@ export default {
 };
 </script>
 
+
 <style scoped>
 @import '@/assets/css/variables.css';
+
 
 header {
   display: grid;
@@ -100,10 +104,12 @@ nav {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease-out;
+  display: none;
 }
 
 .nav-hamburguer.active {
   max-height: 800px;
+  display: flex;
 }
 
 .bar {
@@ -139,6 +145,10 @@ a:hover {
 
 li a img {
   height: 30px;
+}
+
+.hidden {
+  display: none;
 }
 
 @media (max-width: 768px) {
